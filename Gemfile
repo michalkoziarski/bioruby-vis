@@ -3,6 +3,7 @@ source "http://rubygems.org"
 gem "rubyvis"
 gem "statsample"
 gem "bio", ">= 1.4.1"
+gem "require_all"
 
 group :development do
   gem "shoulda", ">= 0"

@@ -1,4 +1,6 @@
 require 'statsample'
 require 'rubyvis'
 require 'bio'
-require 'bio/image'
+require 'require_all'
+
+require_all 'lib'
