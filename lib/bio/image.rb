@@ -13,7 +13,7 @@ module Bio
     def initialize options = {}
       @date = Time.now
       
-      self.class.attributes.each {|attr| send("#{attr.to_s}=", options[attr])}
+      self.class.attributes.each {|attr| send("#{attr.to_s}=", options[attr]) if options[attr]}
     end
   end
 end
