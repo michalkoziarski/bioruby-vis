@@ -9,7 +9,7 @@ module Bio
     def initialize dataset, options = {}
       @dataset = dataset
       
-      ATTRIBUTES.each { |attr| send("#{attr.to_s}=", options[attr]) }
+      ATTRIBUTES.each { |attr| send("#{attr}=", options[attr]) }
       
       set_default_options
     end

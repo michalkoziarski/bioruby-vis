@@ -3,4 +3,4 @@ require 'rubyvis'
 require 'bio'
 require 'require_all'
 
-require_all 'lib'
+require_all File.dirname(__FILE__)
