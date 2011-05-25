@@ -7,7 +7,7 @@ module Bio
         @width = @dataset[:y].size
       end
       
-      scaled_data = @dataset[:y].scale(0, @height)
+      scaled_data = @dataset[:y].scale(@height)
       
       width_of_bar_and_space = @width / @dataset[:y].size
       

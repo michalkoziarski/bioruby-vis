@@ -1,13 +1,11 @@
 module Statsample
   class Statsample::Vector
     
-    # TODO : scaling doesn't work as it should
-    
-    def scale(min, max)
-      min_before = self.min
-      scaled = self.map {|v| v - min_before + min}
-      max_before = scaled.max
-      scaled.map {|v| v * max / max_before.to_f}
+    def scale(height)
+      current_height = (self.max - [self.min, 0].min).abs.to_f
+      ratio = height / current_height
+      self.map {|v| v * ratio}
     end
+    
   end
 end
