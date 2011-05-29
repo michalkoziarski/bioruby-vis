@@ -2,6 +2,9 @@ module Bio
   class Image::Bar < Bio::Image
     
     def svg
+      # TODO : add margins
+      
+      # TODO : check bellow should be done in initializer
       if @width < @dataset[:y].size
         @height *= @dataset[:y].size.to_f / @width
         @width = @dataset[:y].size
