@@ -19,11 +19,16 @@ module Bio
       left_margin = width_of_space / 2
       
       panel = pv.Panel.new.width(@width).height(@height)
+      
+      panel.add(pv.Rule).
+        data([0]).
+        bottom(distance_from_the_bottom).
+        line_width(2)
         
       panel.add(pv.Bar).
         data(scaled_data).
-        bottom(lambda {|b| b > 0 ? distance_from_the_bottom : distance_from_the_bottom + b}).
-        height(lambda {|h| h.abs}).
+        bottom(lambda {|d| d > 0 ? distance_from_the_bottom + 1 : distance_from_the_bottom + d - 1}).
+        height(lambda {|d| d.abs}).
         width(width_of_bar).
         left(lambda {left_margin + index * width_of_bar_and_space})
       
