@@ -3,13 +3,16 @@ module Bio
     
     TOP_MARGIN = 10
     
-    def svg      
-      # TODO : check bellow should be done in initializer
+    def initialize dataset, options = {}
+      super(dataset, options)
+      
       if @width < @dataset[:y].size
         @height *= @dataset[:y].size.to_f / @width
         @width = @dataset[:y].size
       end
-      
+    end
+    
+    def svg
       scaled_data = @dataset[:y].scale(@height - TOP_MARGIN)
       
       distance_from_the_bottom = (scaled_data.min > 0 ? 0 : scaled_data.min.abs + TOP_MARGIN / 2)
