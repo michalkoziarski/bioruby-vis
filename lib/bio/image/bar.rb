@@ -1,6 +1,8 @@
 module Bio
   class Image::Bar < Bio::Image
     
+    TOP_MARGIN = 10
+    
     def svg      
       # TODO : check bellow should be done in initializer
       if @width < @dataset[:y].size
@@ -8,9 +10,9 @@ module Bio
         @width = @dataset[:y].size
       end
       
-      scaled_data = @dataset[:y].scale(@height)
+      scaled_data = @dataset[:y].scale(@height - TOP_MARGIN)
       
-      distance_from_the_bottom = (scaled_data.min > 0 ? 0 : scaled_data.min.abs)
+      distance_from_the_bottom = (scaled_data.min > 0 ? 0 : scaled_data.min.abs + TOP_MARGIN / 2)
       
       width_of_bar_and_space = @width / @dataset[:y].size      
       width_of_bar = (width_of_bar_and_space * 0.5).ceil
