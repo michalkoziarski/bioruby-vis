@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Bio::Image do
   before(:each) do
-    @dataset = Statsample::Dataset.new(:y => [1, 2].to_scale)
+    @dataset = Statsample::Dataset.new(:x => [1, 2, 3, 4].to_scale, :y => [3, 2, -4, 3].to_scale)
   end
   
   Bio::Image::ATTRIBUTES.each do |attr|
