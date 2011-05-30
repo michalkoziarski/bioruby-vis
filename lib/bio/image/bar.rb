@@ -20,7 +20,7 @@ module Bio
       
       left_margin = width_of_space / 2
       
-      panel = pv.Panel.new.width(@width).height(@height)
+      panel = pv.Panel.new.width(@width).height(@height).margin(20).stroke_style("#ccc")
       
       panel.add(pv.Rule).
         data([0]).
