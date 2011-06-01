@@ -7,13 +7,13 @@ module Bio
       x = pv.Scale.linear(@dataset[:x].to_a).range(0, @width)
       y = pv.Scale.linear(@dataset[:y].to_a).range(0, @height)
       
+      margin = @width * 0.05
+      
       panel = pv.Panel.new.
         width(@width).
         height(@height).
-        bottom(20).
-        left(20).
-        right(10).
-        top(5)
+        bottom(margin).
+        top(margin)
 
       panel.add(pv.Line).
         data(data).
