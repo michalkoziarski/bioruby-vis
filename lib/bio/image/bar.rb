@@ -3,15 +3,6 @@ module Bio
     
     TOP_MARGIN = 10
     
-    def initialize dataset, options = {}
-      super(dataset, options)
-      
-      if @width < @dataset[:y].size
-        @height *= @dataset[:y].size.to_f / @width
-        @width = @dataset[:y].size
-      end
-    end
-    
     def svg
       scaled_data = @dataset[:y].scale(@height - TOP_MARGIN)
       

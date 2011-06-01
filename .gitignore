@@ -1,3 +1,7 @@
+tmp
+!tmp/.gitkeep
+
+
 # rcov generated
 coverage
 

@@ -4,6 +4,7 @@ gem "rubyvis"
 gem "statsample"
 gem "bio", ">= 1.4.1"
 gem "require_all"
+gem "rmagick"
 
 group :development do
   gem "shoulda", ">= 0"
