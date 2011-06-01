@@ -1,6 +1,4 @@
-tmp
-!tmp/.gitkeep
-
+tmp/*.svg
 
 # rcov generated
 coverage
