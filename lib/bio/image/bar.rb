@@ -29,7 +29,8 @@ module Bio
         left(lambda {left_margin + index * width_of_bar_and_space})
       
       panel.render      
-      panel.to_svg
+      
+      Bio::File::Svg.new panel.to_svg
     end
     
   end

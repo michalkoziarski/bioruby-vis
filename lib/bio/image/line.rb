@@ -27,7 +27,8 @@ module Bio
      
 
       panel.render
-      panel.to_svg
+      
+      Bio::File::Svg.new panel.to_svg
     end
     
   end

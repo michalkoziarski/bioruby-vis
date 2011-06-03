@@ -16,7 +16,7 @@ module Bio
       
       visualize_method = options[:with] || DEFAULT_VISUALIZE_METHOD
     
-      file_names = Dir.entries("#{File.dirname(__FILE__)}/bio/image").select {|file_name| file_name =~ /\.rb/}
+      file_names = Dir.entries("#{::File.dirname(__FILE__)}/bio/image").select {|file_name| file_name =~ /\.rb/}
       klasses = file_names.collect {|file_name| file_name.chomp ".rb"}
       
       klasses.each do |klass|
