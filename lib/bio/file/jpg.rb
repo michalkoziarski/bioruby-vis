@@ -8,7 +8,7 @@ module Bio
     def save options = {}
       super(options)
       
-      svg_path = @path.sub Regexp.new("#{self.class.to_s.split('::').last.downcase}"), 'svg'
+      svg_path = @path.sub Regexp.new("#{self.class.to_s.split('::').last.downcase}$"), 'svg'
       
       svg_file = ::File.open(svg_path, "w+")
       svg_file.puts @svg
