@@ -20,6 +20,10 @@ module Bio
       self.svg.display
     end
     
+    def jpg
+      Bio::File::Jpg.new(self.svg.to_s)
+    end
+    
     private
     
     def set_default_options
