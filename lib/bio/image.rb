@@ -1,8 +1,8 @@
 module Bio
   class Image
     
-    DEFAULT_HEIGHT = 300
-    DEFAULT_WIDTH = 300
+    DEFAULT_HEIGHT = 250
+    DEFAULT_WIDTH = 400
     
     ATTRIBUTES = [:title, :author, :date, :height, :width]
     
