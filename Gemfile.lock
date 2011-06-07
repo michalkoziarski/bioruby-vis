@@ -2,11 +2,15 @@ GEM
   remote: http://rubygems.org/
   specs:
     bio (1.4.1)
+    bio-samtools (0.2.4)
+      bio (>= 1.4.1)
+      ffi
     clbustos-rtf (0.4.2)
     diff-lcs (1.1.2)
     dirty-memoize (0.0.4)
     extendmatrix (0.3.1)
     fastercsv (1.5.4)
+    ffi (1.0.8)
     git (1.2.5)
     jeweler (1.5.2)
       bundler (~> 1.0.0)
@@ -32,6 +36,7 @@ GEM
       prawn-svg (~> 0.9.1)
       text-table (~> 1.2)
     require_all (1.2.0)
+    rmagick (2.13.1)
     rspec (2.6.0)
       rspec-core (~> 2.6.0)
       rspec-expectations (~> 2.6.0)
@@ -64,10 +69,12 @@ PLATFORMS
 
 DEPENDENCIES
   bio (>= 1.4.1)
+  bio-samtools
   bundler (~> 1.0.0)
   jeweler (~> 1.5.2)
   rcov
   require_all
+  rmagick
   rspec (>= 2.5.0)
   rubyvis
   shoulda

@@ -1,5 +1,5 @@
 module Bio
-  class File
+  class File < ::File
     
     include Magick
     
