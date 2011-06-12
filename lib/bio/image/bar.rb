@@ -4,17 +4,17 @@ module Bio
     TOP_MARGIN = 10
     
     def svg
-      scaled_data = @dataset[:y].scale(@height - TOP_MARGIN)
+      scaled_data = @data[:y].scale(@height - TOP_MARGIN)
       
       distance_from_the_bottom = (scaled_data.min > 0 ? 0 : scaled_data.min.abs + TOP_MARGIN / 2)
       
-      width_of_bar_and_space = @width / @dataset[:y].size      
+      width_of_bar_and_space = @width / @data[:y].size      
       width_of_bar = (width_of_bar_and_space * 0.5).ceil
       width_of_space = width_of_bar_and_space - width_of_bar
       
       left_margin = width_of_space / 2
       
-      panel = pv.Panel.new.width(@width).height(@height).margin(20).stroke_style("#ccc")
+      panel = pv.Panel.new.width(@width).height(@height)
       
       panel.add(pv.Rule).
         data([0]).
@@ -31,6 +31,16 @@ module Bio
       panel.render      
       
       Bio::File::Svg.new panel.to_svg
+    end
+    
+    private
+    
+    def set_default_options
+      super
+      
+      if @width < @data[:y].size
+        @width = @data[:y].size
+      end
     end
     
   end

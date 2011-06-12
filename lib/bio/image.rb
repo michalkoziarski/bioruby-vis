@@ -1,15 +1,17 @@
 module Bio
   class Image
+  
+    DEFAULT_VISUALIZE_METHOD = :to_dataset
     
     DEFAULT_HEIGHT = 250
     DEFAULT_WIDTH = 400
     
     ATTRIBUTES = [:title, :author, :date, :height, :width]
     
-    attr_accessor :dataset, *ATTRIBUTES
+    attr_accessor :data, *ATTRIBUTES
     
-    def initialize dataset, options = {}
-      @dataset = dataset
+    def initialize data, options = {}
+      @data = data
       
       ATTRIBUTES.each { |attr| send("#{attr}=", options[attr]) }
       
@@ -31,11 +33,6 @@ module Bio
       
       @height ||= DEFAULT_HEIGHT
       @width ||= DEFAULT_WIDTH
-      
-      if @width < @dataset[:y].size
-        @height *= @dataset[:y].size.to_f / @width
-        @width = @dataset[:y].size
-      end
     end
     
   end

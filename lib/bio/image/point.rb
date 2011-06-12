@@ -4,10 +4,10 @@ module Bio
     # TODO : unify svg methods, move repeating code to Bio::Image
     
     def svg      
-      data = @dataset.collect {|d| OpenStruct.new(:x => d[:x], :y => d[:y])}
+      data = @data.collect {|d| OpenStruct.new(:x => d[:x], :y => d[:y])}
       
-      x = pv.Scale.linear(@dataset[:x].to_a).range(0, @width)
-      y = pv.Scale.linear(@dataset[:y].to_a).range(0, @height)
+      x = pv.Scale.linear(@data[:x].to_a).range(0, @width)
+      y = pv.Scale.linear(@data[:y].to_a).range(0, @height)
       
       # TODO : probably the ugliest possible method of calculating margins size, refactor
       left_margin = [
@@ -54,6 +54,17 @@ module Bio
       panel.render
       
       Bio::File::Svg.new panel.to_svg
+    end
+    
+    private
+    
+    def set_default_options
+      super
+      
+      if @width < @data[:y].size
+        @height *= @data[:y].size.to_f / @width
+        @width = @data[:y].size
+      end
     end
     
   end
