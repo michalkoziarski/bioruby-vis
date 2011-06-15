@@ -38,6 +38,29 @@ module Bio
       Bio::File::Svg.new panel.to_svg
     end
     
+    def scale min, max
+      @original_data ||= @data
+      @out_of_scale ||= 0
+      
+      @data.each do |column|
+        column.each do |field|
+          if field > max
+            field = max
+            @out_of_scale += 1
+          end
+          
+          if field < min
+            field = min
+            @out_of_scale += 1
+          end
+        end
+      end
+    end
+    
+    def out_of_scale
+      @out_of_scale || 0
+    end
+    
     private
     
     def set_default_options
