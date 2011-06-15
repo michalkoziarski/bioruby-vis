@@ -61,6 +61,10 @@ module Bio
       @out_of_scale || 0
     end
     
+    def reset
+      @data = @original_data if @original_data
+    end
+    
     private
     
     def set_default_options
