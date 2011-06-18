@@ -8,7 +8,7 @@ module Bio
   
     def visualize options = {}
       [:except, :only].each do |option|
-        options[option] ||= []      
+        options[option] ||= []
         options[option] = [options[option]] unless options[option].class == Array
       end
       
@@ -18,6 +18,7 @@ module Bio
       klasses = file_names.collect {|file_name| file_name.chomp ".rb"}
       
       klasses.each do |klass|
+        next unless eval("Bio::Image::#{klass.capitalize}::DEFAULT_VISUALIZE_METHOD")
         next if options[:except].include? klass.to_sym or (!options[:only].empty? and !options[:only].include? klass.to_sym)
         
         visualize_method = options[:with][klass.to_sym] || eval("Bio::Image::#{klass.capitalize}::DEFAULT_VISUALIZE_METHOD")
