@@ -44,6 +44,8 @@ module Bio
       end
     end
     
+    def calculate_margins; nil; end
+    
     def normalize_data      
       max = min = @data[0][0]
       
