@@ -3,9 +3,11 @@ module Bio
     
     private
     
-    def render_image panel, data, x, y     
-      panel.add(pv.Bar).
-        data(data).
+    def create_image
+      x, y = @x, @y
+      
+      @panel.add(pv.Bar).
+        data(@data).
         left(lambda {|d| x.scale(d.x)}).
         height(lambda {|d| y.scale(d.y)}).
         bottom(0).
