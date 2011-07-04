@@ -6,7 +6,7 @@ module Bio
     DEFAULT_HEIGHT = 250
     DEFAULT_WIDTH = 400
     
-    ATTRIBUTES = [:title, :date, :height, :width, :top_margin]
+    ATTRIBUTES = [:title, :date, :height, :width, :top_margin, :net]
     
     attr_reader :left_margin, :right_margin, :top_margin, :bottom_margin, *ATTRIBUTES
     
@@ -24,7 +24,7 @@ module Bio
       calculate_margins
       
       create_panel options[:parent]
-      create_net
+      create_net if @net
       create_image
     end
     
@@ -61,6 +61,8 @@ module Bio
     
     def set_default_options
       @date ||= Time.now
+      
+      @net ||= true
       
       @height ||= DEFAULT_HEIGHT
       @width ||= DEFAULT_WIDTH

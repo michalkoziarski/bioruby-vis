@@ -35,6 +35,8 @@ module Bio
     def set_default_options
       super
       
+      @net = false
+      
       if @width < 10 * @data.size
         @width = 10 * @data.size
       end
@@ -73,8 +75,6 @@ module Bio
         height(@height).
         margin(1)
     end
-    
-    def create_net; nil; end
     
     def create_image
       @panel.add(pv.Layout.Grid).
