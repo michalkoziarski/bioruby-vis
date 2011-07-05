@@ -62,7 +62,7 @@ module Bio
     def set_default_options
       @date ||= Time.now
       
-      @net ||= true
+      @net = true if @net.nil?
       
       @height ||= DEFAULT_HEIGHT
       @width ||= DEFAULT_WIDTH
