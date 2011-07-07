@@ -6,9 +6,9 @@ module Bio
     DEFAULT_HEIGHT = 250
     DEFAULT_WIDTH = 400
     
-    ATTRIBUTES = [:title, :date, :height, :width, :top_margin, :net]
+    ATTRIBUTES = [:title, :height, :width, :top_margin, :net, :x_labels, :y_labels]
     
-    attr_reader :left_margin, :right_margin, :top_margin, :bottom_margin, *ATTRIBUTES
+    attr_reader :left_margin, :right_margin, :bottom_margin, *ATTRIBUTES
     
     def initialize data, options = {}
       @original_data = data
@@ -59,9 +59,7 @@ module Bio
     
     attr_reader :data, :original_data, :options
     
-    def set_default_options
-      @date ||= Time.now
-      
+    def set_default_options      
       @net = true if @net.nil?
       
       @height ||= DEFAULT_HEIGHT
@@ -99,25 +97,49 @@ module Bio
     
     def create_net
       # TODO : following line is needed because lambdas won't recognize @x and @y
-      x, y = @x, @y
+      x, y, x_l, y_l = @x, @y, @x_labels, @y_labels
+      
+      y_ticks = if @y_labels
+        a = Array.new(@y_labels.size, @original_data[:y].min)
+        r = Rational (@original_data[:y].max - @original_data[:y].min), (@y_labels.size - 1)
+        
+        (@y_labels.size).times {|i| a[i] += i*r}
+        
+        a
+      else
+        @y.ticks
+      end
+      
+      y_labels = @y_labels ? lambda { y_l[self.index] } : @y.tick_format
       
       @panel.add(pv.Rule).
-        data(@y.ticks).
+        data(y_ticks).
         bottom(@y).
         stroke_style(lambda {|d| d != 0 ? "#eee" : "#000"}).
         anchor("left").
         add(pv.Label).
-          visible(lambda {|d| d != y.ticks.min}).
-          text(@y.tick_format)
+          text(y_labels)
+          
+      x_ticks = if @x_labels
+        a = Array.new(@x_labels.size, @original_data[:x].min)
+        r = Rational (@original_data[:x].max - @original_data[:x].min), (@x_labels.size - 1)
+        
+        (@x_labels.size).times {|i| a[i] += i*r}
+        
+        a
+      else
+        @x.ticks
+      end
+      
+      x_labels = @x_labels ? lambda { x_l[self.index] } : @x.tick_format
 
       @panel.add(pv.Rule).
-        data(@x.ticks).
+        data(x_ticks).
         left(@x).
         stroke_style(lambda {|d| d != 0 ? "#eee" : "#000"}).
         anchor("bottom").
         add(pv.Label).
-          visible(lambda {|d| d != x.ticks.min}).
-          text(@x.tick_format)
+          text(x_labels)
     end
     
   end
