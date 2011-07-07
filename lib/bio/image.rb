@@ -100,12 +100,12 @@ module Bio
       x, y, x_l, y_l = @x, @y, @x_labels, @y_labels
       
       y_ticks = if @y_labels
-        a = Array.new(@y_labels.size, @original_data[:y].min)
+        ticks = Array.new(@y_labels.size, @original_data[:y].min)
         r = Rational (@original_data[:y].max - @original_data[:y].min), (@y_labels.size - 1)
         
-        (@y_labels.size).times {|i| a[i] += i*r}
+        (@y_labels.size).times {|i| ticks[i] += i*r}
         
-        a
+        ticks
       else
         @y.ticks
       end
@@ -121,12 +121,12 @@ module Bio
           text(y_labels)
           
       x_ticks = if @x_labels
-        a = Array.new(@x_labels.size, @original_data[:x].min)
+        ticks = Array.new(@x_labels.size, @original_data[:x].min)
         r = Rational (@original_data[:x].max - @original_data[:x].min), (@x_labels.size - 1)
         
-        (@x_labels.size).times {|i| a[i] += i*r}
+        (@x_labels.size).times {|i| ticks[i] += i*r}
         
-        a
+        ticks
       else
         @x.ticks
       end
