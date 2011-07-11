@@ -29,11 +29,9 @@ module Bio
     end
     
     def svg
-      panel = @panel.clone
+      @panel.render
       
-      panel.render
-      
-      Bio::File::Svg.new(panel.to_svg)
+      Bio::File::Svg.new(@panel.to_svg)
     end
     
     def display

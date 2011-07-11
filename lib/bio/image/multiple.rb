@@ -3,6 +3,8 @@
 module Bio
   class Image::Multiple < Bio::Image
     
+    LEGENDS_MARGIN = 25
+    
     DEFAULT_COLORS = [
       "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", 
       "#e377c2", "#7f7f7f", "#bcbd22", "#aec7e8", "#ffbb78", "#98df8a", 
@@ -81,7 +83,33 @@ module Bio
           raise "Unsupported class: #{self.class}"
         end
       end
+      
+      if @legend
+        biggest_length = (@legend.collect {|l| l.size}).max
+        
+        additional_width = biggest_length * 6 + 5
+        
+        @panel.right(@right_margin + additional_width + LEGENDS_MARGIN)
+        
+        @legend.each_with_index do |legend, index|
+          left = @width + LEGENDS_MARGIN
+          top = index * 15
+          color = @colors[index % @colors.size]
+          
+          @panel.add(pv.Dot).
+            left(left).
+            top(top).
+            stroke_style(color).
+            fill_style(color).
+            add(pv.Label).
+              left(left + 5).
+              top(top + 7).
+              text(legend)
+        end
+      end
     end
+    
+    # TODO : total_width
     
   end
 end
