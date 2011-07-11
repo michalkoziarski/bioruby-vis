@@ -1,5 +1,7 @@
 module Bio
   class Image::Line < Bio::Image
+  
+    DEFAULT_VISUALIZE_METHOD = :to_dataset
     
     private
     

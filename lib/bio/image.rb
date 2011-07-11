@@ -1,7 +1,7 @@
 module Bio
   class Image
   
-    DEFAULT_VISUALIZE_METHOD = :to_dataset
+    DEFAULT_VISUALIZE_METHOD = nil
     
     DEFAULT_HEIGHT = 250
     DEFAULT_WIDTH = 400
@@ -29,9 +29,11 @@ module Bio
     end
     
     def svg
-      @panel.render
+      panel = @panel.clone
       
-      Bio::File::Svg.new(@panel.to_svg)
+      panel.render
+      
+      Bio::File::Svg.new(panel.to_svg)
     end
     
     def display
@@ -121,7 +123,8 @@ module Bio
           text(y_labels)
           
       x_ticks = if @x_labels
-        ticks = Array.new(@x_labels.size, @original_data[:x].min)
+        ticks = Array.new(@x_labels.size, 
+        @original_data[:x].min)
         r = Rational (@original_data[:x].max - @original_data[:x].min), (@x_labels.size - 1)
         
         (@x_labels.size).times {|i| ticks[i] += i*r}

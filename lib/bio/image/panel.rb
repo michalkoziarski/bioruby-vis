@@ -1,8 +1,6 @@
 module Bio
   class Image::Panel < Bio::Image
     
-    DEFAULT_VISUALIZE_METHOD = nil
-    
     def initialize
       set_default_options
       
