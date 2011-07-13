@@ -12,7 +12,13 @@ module Bio
     
     def initialize data, options = {}
       @original_data = data
-      @data = data
+      
+      @data = if self.class::DEFAULT_VISUALIZE_METHOD and data.respond_to?(self.class::DEFAULT_VISUALIZE_METHOD)
+        data.send(self.class::DEFAULT_VISUALIZE_METHOD)
+      else
+        data
+      end
+      
       @options = options
       
       ATTRIBUTES.each { |attr| send("#{attr}=", options[attr]) }
