@@ -25,6 +25,7 @@ module Bio
       
       create_panel options[:parent]
       create_net if @net
+      create_title if @title
       create_image
     end
     
@@ -141,6 +142,19 @@ module Bio
         anchor("bottom").
         add(pv.Label).
           text(x_labels)
+    end
+    
+    def create_title
+      titles_width = @title.size * 6 + 5
+      
+      @top_margin += 30
+      
+      @panel.top(@top_margin)
+      
+      @panel.add(pv.Label).
+        left((@width - titles_width) / 2).
+        top(-13).
+        text(@title)
     end
     
   end

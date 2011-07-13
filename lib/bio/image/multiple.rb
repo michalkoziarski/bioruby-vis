@@ -89,7 +89,9 @@ module Bio
         
         additional_width = biggest_length * 6 + 5
         
-        @panel.right(@right_margin + additional_width + LEGENDS_MARGIN)
+        @right_margin += additional_width + LEGENDS_MARGIN
+        
+        @panel.right(@right_margin)
         
         @legend.each_with_index do |legend, index|
           left = @width + LEGENDS_MARGIN
@@ -108,8 +110,6 @@ module Bio
         end
       end
     end
-    
-    # TODO : total_width
     
   end
 end
