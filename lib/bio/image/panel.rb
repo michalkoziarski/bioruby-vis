@@ -1,12 +1,14 @@
 module Bio
   class Image::Panel < Bio::Image
     
-    def initialize
+    def initialize *images
       set_default_options
       
       @panel = pv.Panel.new.
         width(@width).
         height(@height)
+        
+      images.each {|image| self.add image}
     end
     
     def add image
