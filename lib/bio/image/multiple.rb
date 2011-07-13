@@ -52,8 +52,6 @@ module Bio
         min_diff = data[:y].min - @min
         max_diff = data[:y].max - @max
         
-        # TODO : line bellow doesnt work as it should when @max = @min
-        
         height_diff = (@max - @min == 0 ? 1 : (data[:y].max - data[:y].min).to_f / (@max - @min))
         
         x = pv.Scale.linear(data[:x].to_a).range(0, @width)
