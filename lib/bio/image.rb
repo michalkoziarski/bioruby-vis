@@ -64,7 +64,7 @@ module Bio
     
     attr_writer *ATTRIBUTES
     
-    attr_reader :data, :original_data, :options
+    attr_reader :data, :original_data, :options, :x, :y
     
     def set_default_options      
       @net = true if @net.nil?
@@ -162,6 +162,8 @@ module Bio
         top(-13).
         text(@title)
     end
+    
+    def create_image; end
     
   end
 end

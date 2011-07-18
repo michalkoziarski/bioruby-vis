@@ -9,6 +9,7 @@ GEM
     diff-lcs (1.1.2)
     dirty-memoize (0.0.4)
     extendmatrix (0.3.1)
+    fabrication (1.0.1)
     fastercsv (1.5.4)
     ffi (1.0.8)
     git (1.2.5)
@@ -62,7 +63,6 @@ GEM
     statsample-bivariate-extension (0.13.4)
     svg-graph (1.0.1)
     text-table (1.2.2)
-    timecop (0.3.5)
 
 PLATFORMS
   ruby
@@ -71,6 +71,7 @@ DEPENDENCIES
   bio (>= 1.4.1)
   bio-samtools
   bundler (~> 1.0.0)
+  fabrication
   jeweler (~> 1.5.2)
   rcov
   require_all
@@ -79,4 +80,3 @@ DEPENDENCIES
   rubyvis
   shoulda
   statsample
-  timecop

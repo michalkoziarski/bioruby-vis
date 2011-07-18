@@ -1,5 +1,7 @@
 # TODO : enable labels
 
+# TODO : fix it for sets with singular value ( like [1,1,1,1,1,...] )
+
 module Bio
   class Image::Multiple < Bio::Image
     

@@ -13,5 +13,4 @@ group :development do
   gem "jeweler", "~> 1.5.2"
   gem "rcov", ">= 0"
   gem "rspec", ">= 2.5.0"
-  gem "timecop"
 end
