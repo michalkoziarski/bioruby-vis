@@ -14,7 +14,7 @@ module Bio
     def add image
       image.class.new(image.send(:original_data), image.send(:options).merge(
         :parent => @panel,
-        :top_margin => @height
+        :top_margin => @height + image.send(:top_margin)
       ))
       
       @width = [image.total_width, @width].max

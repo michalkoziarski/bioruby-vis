@@ -91,6 +91,14 @@ module Bio
         @y.ticks.max.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1.").size
       ].max * 6 + 5
     end
+	
+	  def calculate_extremes
+	    [:max, :min].each do |extreme|
+	      [:x, :y].each do |value|
+		      eval("@#{extreme}_#{value} = @original_data[:#{value}].#{extreme}")
+		    end
+	    end
+	  end
     
     def create_panel parent = nil
       @panel = (parent ? parent.add(pv.Panel) : pv.Panel.new).
@@ -103,51 +111,35 @@ module Bio
     end
     
     def create_net
+	    calculate_extremes
+	  
       # TODO : following line is needed because lambdas won't recognize @x and @y
       x, y, x_l, y_l = @x, @y, @x_labels, @y_labels
-      
-      y_ticks = if @y_labels
-        ticks = Array.new(@y_labels.size, @original_data[:y].min)
-        r = Rational (@original_data[:y].max - @original_data[:y].min), (@y_labels.size - 1)
-        
-        (@y_labels.size).times {|i| ticks[i] += i*r}
-        
-        ticks
-      else
-        @y.ticks
-      end
-      
-      y_labels = @y_labels ? lambda { y_l[self.index] } : @y.tick_format
-      
-      @panel.add(pv.Rule).
-        data(y_ticks).
-        bottom(@y).
-        stroke_style(lambda {|d| d != 0 ? "#eee" : "#000"}).
-        anchor("left").
-        add(pv.Label).
-          text(y_labels)
-          
-      x_ticks = if @x_labels
-        ticks = Array.new(@x_labels.size, 
-        @original_data[:x].min)
-        r = Rational (@original_data[:x].max - @original_data[:x].min), (@x_labels.size - 1)
-        
-        (@x_labels.size).times {|i| ticks[i] += i*r}
-        
-        ticks
-      else
-        @x.ticks
-      end
-      
-      x_labels = @x_labels ? lambda { x_l[self.index] } : @x.tick_format
-
-      @panel.add(pv.Rule).
-        data(x_ticks).
-        left(@x).
-        stroke_style(lambda {|d| d != 0 ? "#eee" : "#000"}).
-        anchor("bottom").
-        add(pv.Label).
-          text(x_labels)
+	  
+	    [:x, :y].each do |sym|
+		    eval("
+		      #{sym}_ticks = if @#{sym}_labels
+			      ticks = Array.new(@#{sym}_labels.size, @min_#{sym})
+			      r = Rational (@max_#{sym} - @min_#{sym}), (@#{sym}_labels.size - 1)
+			      
+			      (@#{sym}_labels.size).times {|i| ticks[i] += i*r}
+			      
+			      ticks
+		      else
+			      @#{sym}.ticks
+		      end
+		  
+		      #{sym}_labels = @#{sym}_labels ? lambda { #{sym}_l[self.index] } : @#{sym}.tick_format
+		  
+		      @panel.add(pv.Rule).
+			      data(#{sym}_ticks).
+			      #{sym == :x ? 'left' : 'bottom'}(@#{sym}).
+			      stroke_style(lambda {|d| d != 0 ? '#eee' : '#000'}).
+			      anchor(sym == :x ? 'bottom' : 'left').
+			      add(pv.Label).
+			        text(#{sym}_labels)
+		    ")
+	    end
     end
     
     def create_title

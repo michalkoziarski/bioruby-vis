@@ -37,13 +37,8 @@ module Bio
       
       @net = false
       
-      if @width < 10 * @data.size
-        @width = 10 * @data.size
-      end
-      
-      if @height < 4 * @data[0].size
-        @height = 4 * @data[0].size
-      end
+      @width = 10 * @data.size if @width < 10 * @data.size
+      @height = 4 * @data[0].size if @height < 4 * @data[0].size
     end
     
     def calculate_margins; nil; end

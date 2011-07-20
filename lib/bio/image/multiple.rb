@@ -1,5 +1,3 @@
-# TODO : enable labels
-
 # TODO : fix it for sets with singular value ( like [1,1,1,1,1,...] )
 
 module Bio
@@ -24,9 +22,6 @@ module Bio
       
       data.map! {|d| d.respond_to?(:to_dataset) ? d.to_dataset : d}
       
-      @max = (data.collect {|d| d[:y].max}).max
-      @min = (data.collect {|d| d[:y].min}).min
-      
       @size = (data.collect {|d| d[:y].size}).max - 1
       
       @colors = options[:colors] || DEFAULT_COLORS
@@ -44,17 +39,27 @@ module Bio
       @width = @size if @width < @size
     end
     
-    def normalize_data      
+    def normalize_data
+	    calculate_extremes
+      
       @x = pv.Scale.linear([0, @size]).range(0, @width)
-      @y = pv.Scale.linear([@min, @max]).range(0, @height)
+      @y = pv.Scale.linear([@min_y, @max_y]).range(0, @height)
     end
+	
+	  def calculate_extremes
+      [:max, :min].each do |extreme|
+	      [:x, :y].each do |value|
+		      eval("@#{extreme}_#{value} ||= (@original_data.collect {|d| d[:#{value}].#{extreme}}).#{extreme}")
+		    end
+	    end
+	  end
     
     def create_image
       @data.each_with_index do |data, index|
-        min_diff = data[:y].min - @min
-        max_diff = data[:y].max - @max
+        min_diff = data[:y].min - @min_y
+        max_diff = data[:y].max - @max_y
         
-        height_diff = (@max - @min == 0 ? 1 : (data[:y].max - data[:y].min).to_f / (@max - @min))
+        height_diff = (@max_y - @min_y == 0 ? 1 : (data[:y].max - data[:y].min).to_f / (@max_y - @min_y))
         
         x = pv.Scale.linear(data[:x].to_a).range(0, @width)
         y = pv.Scale.linear(data[:y].to_a).range(0, height_diff * @height)

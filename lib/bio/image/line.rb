@@ -22,9 +22,7 @@ module Bio
     def set_default_options
       super
       
-      if @width < @data[:y].size
-        @width = @data[:y].size
-      end
+      @width = @data[:y].size if @width < @data[:y].size
     end
     
   end
