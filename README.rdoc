@@ -1,6 +1,32 @@
 = bio-vis
 
-Description goes here.
+Bio-vis is a gem designed to enable visualization of biological data.
+
+== Examples of usage
+
+data = [1, 3, 5, 2, 4]
+
+bar = Bio::Image::Bar.new(data)
+
+bar.display
+
+line = Bio::Image::Line.new(data, :width => 200, :height => 200)
+
+line.jpg.save(:path => "./my_line")
+
+point = data.to_point(:title => "my_point")
+
+point.svg.save(:name => "my_point")
+
+panel = Bio::Image::Panel.new(bar, point)
+
+panel.display
+
+another_data = [4, 8, 2, 1, 4]
+
+timecourse = Bio::Image::Timecourse.new(data, another_data)
+
+timecourse.display
 
 == Contributing to bio-vis
  

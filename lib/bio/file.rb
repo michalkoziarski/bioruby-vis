@@ -24,7 +24,11 @@ module Bio
     def save options = {}
       @dir = options[:dir] || @dir || self.class.default_dir
       @name = options[:name] || @name || "Untitled(#{Time.now.to_i})"
-      @path = options[:path] || "#{@dir.chomp('/')}/#{@name}.#{self.class.to_s.split('::').last.downcase}"
+      
+      extension = self.class.to_s.split('::').last.downcase
+      
+      @path = options[:path] || "#{@dir.chomp('/')}/#{@name}.#{extension}"
+      @path += ".#{extension}" unless @path =~ /#{extension}$/i
     end
     
   end
