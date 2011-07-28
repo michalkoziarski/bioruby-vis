@@ -1,3 +1,4 @@
 - @images.each do |image|
   %p
-    = image.path
+    = link_to image_tag(image.image_url(:thumb).to_s), image_path(image)
+    = link_to "Delete", image_path(image), :confirm => "Are you sure?", :method => :delete

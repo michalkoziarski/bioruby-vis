@@ -1,25 +1,54 @@
-class Image
-  attr_reader :file_name
+require 'RMagick'
+
+class Image < ActiveRecord::Base
+  mount_uploader :image, ImageUploader
   
-  def initialize file_name
-    @file_name = file_name
-  end
+  validates_presence_of :path
   
-  def path
-    "#{Image.dir}/#{self.file_name}"
-  end
+  attr_accessible :path
+  
+  after_create :upload_image
+  
+  before_create :set_file_modification_time
   
   def self.dir
     "#{File.dirname(__FILE__)}/../../../tmp"
   end
   
-  def self.all
-    images = []
+  def self.reload_images    
+    entries = Dir.new(Image.dir).entries.reject {|entry| entry =~ /^\./}
     
-    Dir.entries(Image.dir).each do |path|
-      images << Image.new(path) unless path =~ /^\./
+    entries.each do |entry|
+      image = Image.find_by_path(entry)
+      if !image
+        Image.create(:path => entry)
+      elsif image.file_modification_time.utc.to_s != File.mtime("#{Image.dir}/#{entry}").utc.to_s
+        image.destroy
+        Image.create(:path => entry)
+      end
     end
+  end
+  
+  def full_path
+    "#{Image.dir}/#{self.path}"
+  end
+  
+  def perm_destroy
+    File.delete(self.full_path)
     
-    images
+    self.destroy
+  end
+  
+  private
+  
+  def upload_image
+    image_file = File.open(self.full_path)
+    
+    self.image.store!(image_file)
+    self.save
+  end
+  
+  def set_file_modification_time
+    self.file_modification_time = File.mtime(self.full_path)
   end
 end

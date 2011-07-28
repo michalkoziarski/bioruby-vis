@@ -9,6 +9,8 @@ gem 'jquery-rails'
 gem 'therubyracer'
 gem 'haml'
 gem 'haml-rails'
+gem 'carrierwave'
+gem 'rmagick'
 
 group :test do
   gem 'turn', :require => false
