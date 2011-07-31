@@ -1,4 +1,21 @@
-- @images.each do |image|
-  %p
-    = link_to image_tag(image.image_url(:thumb).to_s), image_path(image)
-    = link_to "Delete", image_path(image), :confirm => "Are you sure?", :method => :delete
+#header
+  %ul
+    = semantic_form_for :image, :url => images_path, :html => { :method => :get } do |f|
+      %li
+        = f.input :tag, :label => "Tag: ", :as => :select, :collection => Tag.all, :required => false
+      %li
+        = f.input :query, :label => "Query: ", :as => :search, :required => false
+      %li
+        = f.submit "Search"
+#content
+  - @images.in_groups_of(5, false) do |group|
+    %ul
+      - group.each do |image|
+        %li
+          %p= image.path
+          - unless image.tags.empty?
+            %p
+              Tags:
+              = image.tags.collect {|tag| tag.name}.join ', '
+          %p= link_to image_tag(image.image_url(:thumb).to_s), image_path(image)
+          %p= link_to "Delete", image_path(image), :confirm => "Are you sure?", :method => :delete

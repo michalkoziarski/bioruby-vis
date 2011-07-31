@@ -11,6 +11,7 @@ gem 'haml'
 gem 'haml-rails'
 gem 'carrierwave'
 gem 'rmagick'
+gem 'formtastic'
 
 group :test do
   gem 'turn', :require => false
