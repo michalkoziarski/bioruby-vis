@@ -41,6 +41,10 @@ class Image < ActiveRecord::Base
     self.destroy
   end
   
+  def tag tag
+    self.tags << tag
+  end
+  
   private
   
   def upload_image
