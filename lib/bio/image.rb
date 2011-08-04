@@ -95,6 +95,9 @@ module Bio
 	  def calculate_extremes
 	    [:max, :min].each do |extreme|
 	      [:x, :y].each do |value|
+          # TODO : following line disables possibility of creating bars with Bar.new(data)
+          # unless data is Dataset. Calculating extremes should be done before data is
+          # converted to OpenStruct. Fix
 		      eval("@#{extreme}_#{value} = @original_data[:#{value}].#{extreme}")
 		    end
 	    end
