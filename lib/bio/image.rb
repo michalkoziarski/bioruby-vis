@@ -45,8 +45,14 @@ module Bio
       self.svg.display
     end
     
-    def jpg
-      Bio::File::Jpg.new(self.svg.to_s)
+    file_names = Dir.entries("#{::File.dirname(__FILE__)}/file").select {|file_name| file_name =~ /\.rb/}
+    
+    extensions = file_names.collect {|file_name| file_name.chomp(".rb")}
+    
+    (extensions - ["svg"]).each do |extension|
+      define_method(extension) do
+        eval("Bio::File::#{extension.capitalize}").new(self.svg.to_s)
+      end
     end
     
     def total_height
