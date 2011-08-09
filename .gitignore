@@ -1,6 +1,5 @@
 tmp/*
 !tmp/.gitkeep
-browser/public/uploads/
 
 # rcov generated
 coverage
