@@ -11,13 +11,13 @@ module Bio
     attr_reader :left_margin, :right_margin, :bottom_margin, *ATTRIBUTES
     
     def initialize data, options = {}
-      @original_data = data
-      
       @data = if self.class::DEFAULT_VISUALIZE_METHOD and data.respond_to?(self.class::DEFAULT_VISUALIZE_METHOD)
         data.send(self.class::DEFAULT_VISUALIZE_METHOD)
       else
         data
       end
+      
+      @original_data = @data
       
       @options = options
       
@@ -101,9 +101,6 @@ module Bio
 	  def calculate_extremes
 	    [:max, :min].each do |extreme|
 	      [:x, :y].each do |value|
-          # TODO : following line disables possibility of creating bars with Bar.new(data)
-          # unless data is Dataset. Calculating extremes should be done before data is
-          # converted to OpenStruct. Fix
 		      eval("@#{extreme}_#{value} = @original_data[:#{value}].#{extreme}")
 		    end
 	    end
@@ -122,7 +119,7 @@ module Bio
     def create_net
 	    calculate_extremes
 	  
-      # TODO : following line is needed because lambdas won't recognize @x and @y
+      # following line is needed because lambdas won't recognize @x and @y
       x, y, x_l, y_l = @x, @y, @x_labels, @y_labels
 	  
 	    [:x, :y].each do |sym|

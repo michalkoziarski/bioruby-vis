@@ -4,7 +4,6 @@ module Bio
     DEFAULT_VISUALIZE_METHOD = :to_matrix
     
     def scale min, max
-      @original_data ||= @data
       @out_of_scale ||= 0
       
       @data.each do |column|
@@ -41,7 +40,9 @@ module Bio
       @height = 4 * @data[0].size if @height < 4 * @data[0].size
     end
     
-    def calculate_margins; nil; end
+    def calculate_margins
+      @top_margin ||= 0
+    end
     
     def normalize_data      
       max = min = @data[0][0]
@@ -64,11 +65,14 @@ module Bio
       end
     end
     
-    def create_panel
-      @panel = pv.Panel.new.
+    def create_panel parent = nil
+      @panel = (parent ? parent.add(pv.Panel) : pv.Panel.new).
         width(@width).
         height(@height).
-        margin(1)
+        left(0).
+        top(@top_margin).
+        right(0).
+        bottom(0)
     end
     
     def create_image

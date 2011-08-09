@@ -7,6 +7,8 @@ describe Bio::Image::Bar do
   
   it "should be created properly" do
     Bio::Image::Bar.new @data
+    
+    @data.to_bar
   end
   
   describe "test cases" do
