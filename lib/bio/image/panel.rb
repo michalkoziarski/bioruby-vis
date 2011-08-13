@@ -12,10 +12,18 @@ module Bio
     end
     
     def add image
-      image.class.new(image.send(:original_data), image.send(:options).merge(
+      klass = image.class
+      data = image.send(:original_data)
+      options = image.send(:options).merge(
         :parent => @panel,
         :top_margin => @height + image.send(:top_margin)
-      ))
+      )
+      
+      if klass.ancestors.include? Bio::Image::Multiple
+        klass.new(*data, options)
+      else
+        klass.new(data, options)
+      end
       
       @width = [image.total_width, @width].max
       @height += image.total_height

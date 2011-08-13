@@ -42,6 +42,9 @@ module Bio
     
     def calculate_margins
       @top_margin ||= 0
+      @right_margin ||= 0
+      @bottom_margin ||= 0
+      @left_margin ||= 0
     end
     
     def normalize_data      
