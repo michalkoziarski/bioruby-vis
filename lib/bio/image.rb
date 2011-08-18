@@ -45,6 +45,10 @@ module Bio
       self.svg.display
     end
     
+    def save options = {}
+      self.jpg.save(options)
+    end
+    
     file_names = Dir.entries("#{::File.dirname(__FILE__)}/file").select {|file_name| file_name =~ /\.rb/}
     
     extensions = file_names.collect {|file_name| file_name.chomp(".rb")}
