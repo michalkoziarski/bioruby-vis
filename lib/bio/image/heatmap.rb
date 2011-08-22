@@ -4,16 +4,16 @@ module Bio
     DEFAULT_VISUALIZE_METHOD = :to_matrix
     
     def scale min, max
+      @data = @original_data
+      
       @data.each_with_index do |column, i|
-        column.each do |field, j|
+        column.each_with_index do |field, j|
           if field > max
             @data[i][j] = max
-            @out_of_scale += 1
           end
           
           if field < min
             @data[i][j] = min
-            @out_of_scale += 1
           end
         end
       end
