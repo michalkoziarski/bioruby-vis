@@ -4,29 +4,25 @@ module Bio
     DEFAULT_VISUALIZE_METHOD = :to_matrix
     
     def scale min, max
-      @out_of_scale ||= 0
-      
-      @data.each do |column|
-        column.each do |field|
+      @data.each_with_index do |column, i|
+        column.each do |field, j|
           if field > max
-            field = max
+            @data[i][j] = max
             @out_of_scale += 1
           end
           
           if field < min
-            field = min
+            @data[i][j] = min
             @out_of_scale += 1
           end
         end
       end
-    end
-    
-    def out_of_scale
-      @out_of_scale || 0
+      
+      Bio::Image::Heatmap.new(@data, @options)
     end
     
     def reset
-      @data = @original_data if @original_data
+      Bio::Image::Heatmap.new(@original_data || @data, @options)
     end
     
     private
@@ -34,10 +30,8 @@ module Bio
     def set_default_options
       super
       
-      @net = false
-      
       @width = 10 * @data.size if @width < 10 * @data.size
-      @height = 4 * @data[0].size if @height < 4 * @data[0].size
+      @height = 10 * @data[0].size if @height < 10 * @data[0].size
     end
     
     def calculate_margins
@@ -45,6 +39,9 @@ module Bio
       @right_margin ||= 0
       @bottom_margin ||= 0
       @left_margin ||= 0
+      
+      @left_margin += (@y_labels.map {|label| label.size}).max * 6 + 5 if @y_labels
+      @top_margin += (@x_labels.map {|label| label.size}).max * 6 + 5 if @x_labels
     end
     
     def normalize_data      
@@ -72,10 +69,35 @@ module Bio
       @panel = (parent ? parent.add(pv.Panel) : pv.Panel.new).
         width(@width).
         height(@height).
-        left(0).
+        left(@left_margin).
         top(@top_margin).
-        right(0).
-        bottom(0)
+        right(@right_margin).
+        bottom(@bottom_margin)
+    end
+    
+    def create_net
+      if @y_labels
+        margin = @height.to_f / (2 * @y_labels.size)
+        
+        @y_labels.each_with_index do |label, index|
+          @panel.add(pv.Label).
+            top(-10 + @top_margin + margin * (index * 2 + 1)).
+            left(-@left_margin).
+            text(label)
+        end
+      end
+      
+      if @x_labels
+        margin = @width.to_f / (2 * @x_labels.size)
+        
+        @x_labels.each_with_index do |label, index|
+          @panel.add(pv.Label).
+            top(0).
+            left(-10 + @left_margin + margin * (index * 2 + 1)).
+            text(label).
+            text_angle(-Math::PI / 2.0)
+        end
+      end
     end
     
     def create_image

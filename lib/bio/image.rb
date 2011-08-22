@@ -161,7 +161,7 @@ module Bio
       
       @panel.add(pv.Label).
         left((@width - titles_width) / 2).
-        top(-13).
+        top(17 - @top_margin).
         text(@title)
     end
     
